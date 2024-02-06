@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    employees: DEBUG
+    org.hibernate.SQL: TRACE
+
+employees:
+  backend-url: http://localhost:8081
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      clientCircuitBreaker:
+        slidingWindowSize: 3
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: count_based
+        waitDurationInOpenState: 60s
+        failureRateThreshold: 50
+  retry:
+    instances:
+      clientRetry:
+        max-attempts: 3
+  bulkhead:
+    instances:
+      clientBulkhead:
+        max-concurrent-calls: 5
+  ratelimiter:
+    instances:
+      clientRateLimiter:
+        limit-for-period: 5
+        limit-refresh-period: 1s
+        allow-health-indicator-to-fail: true
+        timeout-duration: 0s

@@ -1,0 +1,16 @@
+GET http://localhost:8888/config-client-demo/default
+
+#
+###
+POST http://localhost:8888/encrypt
+
+HelloEncoded
+
+###
+POST http://localhost:8888/monitor
+Content-Type: application/x-www-form-urlencoded
+
+path=config-client-demo
+
+###
+DELETE http://localhost:8888/api/caches
